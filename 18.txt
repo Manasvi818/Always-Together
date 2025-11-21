@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Together</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+/* ------------------------------------------------------
+   COLORS & GLOBAL
+------------------------------------------------------ */
+:root {
+    --background-base: #FFF8F2;
+    --accent-grad-1: #F9CBA8;
+    --accent-grad-2: #FFD6B0;
+    --primary-accent: #D48E57;
+    --secondary-accent: #F0B77A;
+    --text-ink: #4E3826;
+    --button-grad-1: #F8BA7A;
+    --button-grad-2: #F4A261;
+    --frame-glow: rgba(244,162,97,0.35);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--background-base);
+    font-family: "Georgia", serif;
+    color: var(--text-ink);
+    overflow-x: hidden;
+    animation: fadeIn 1.3s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+/* ------------------------------------------------------
+   FLOATING HEART BACKGROUND (A — Soft Upward Hearts)
+------------------------------------------------------ */
+.floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.floating-hearts span {
+    position: absolute;
+    bottom: -40px;
+    font-size: 20px;
+    animation: heartFloat 10s linear infinite;
+    opacity: 0.8;
+    background: linear-gradient(90deg, #f4b36b, #e9867b, #e65a75);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+@keyframes heartFloat {
+    0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(-50vh) translateX(20px) scale(1.2);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(-20px) scale(0.9);
+        opacity: 0;
+    }
+}
+
+/* Random positions + delays */
+.floating-hearts span:nth-child(1) { left: 10%; animation-delay: 0s; }
+.floating-hearts span:nth-child(2) { left: 25%; animation-delay: 2s; }
+.floating-hearts span:nth-child(3) { left: 40%; animation-delay: 4s; }
+.floating-hearts span:nth-child(4) { left: 55%; animation-delay: 1s; }
+.floating-hearts span:nth-child(5) { left: 70%; animation-delay: 3s; }
+.floating-hearts span:nth-child(6) { left: 85%; animation-delay: 5s; }
+
+/* ------------------------------------------------------
+   HEADING + SUBTITLE
+------------------------------------------------------ */
+.heading-wrapper {
+    text-align: center;
+    margin-top: 35px;
+}
+
+.get-title {
+    font-family: "Great Vibes", cursive;
+    font-size: 95px;
+    background: linear-gradient(90deg, #f4b36b, #e9867b, #e65a75);
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 0;
+}
+
+.get-subtitle {
+    font-family: "Great Vibes", cursive;
+    font-size: 40px;
+    color: #4E3826;
+    margin-top: -5px;
+}
+
+/* ------------------------------------------------------
+   HEART ROW (Responsive)
+------------------------------------------------------ */
+.heart-row {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.heart-row span {
+    font-size: 34px;
+    display: inline-block;
+    margin: 0 22px;
+    background: linear-gradient(90deg, #f4b36b, #e9867b, #e65a75);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* Responsive sizing */
+@media (max-width: 1200px) { .heart-row span { font-size: 30px; margin: 0 18px; } }
+@media (max-width: 900px)  { .heart-row span { font-size: 26px; margin: 0 15px; } }
+@media (max-width: 700px)  { .heart-row span { font-size: 22px; margin: 0 12px; } }
+@media (max-width: 500px)  { .heart-row span { font-size: 18px; margin: 0 10px; } }
+@media (max-width: 400px)  { .heart-row span { font-size: 16px; margin: 0 8px; } }
+
+/* ------------------------------------------------------
+   PHOTO GRID
+------------------------------------------------------ */
+.grid {
+    width:90%;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+.item {
+    background:linear-gradient(135deg,var(--accent-grad-1),var(--accent-grad-2));
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 10px 25px var(--frame-glow);
+    transition:.4s;
+}
+.item:hover {
+    transform:translateY(-12px) rotate(-1.5deg);
+}
+.item img { width:100%; border-radius:14px; }
+
+.text-box {
+    background:white;
+    padding:35px;
+    border-radius:14px;
+    font-size:22px;
+    font-style:italic;
+    color:var(--text-ink);
+    box-shadow:0 10px 22px var(--frame-glow);
+}
+
+/* ------------------------------------------------------
+   MESSAGE SYSTEM
+------------------------------------------------------ */
+.message-section {
+    width:90%;
+    margin:25px auto;
+    background:white;
+    padding:22px;
+    border-radius:20px;
+    box-shadow:0 10px 30px var(--frame-glow);
+    font-family:"Poppins",sans-serif;
+}
+#messageInput {
+    width:100%;
+    height:90px;
+    padding:12px;
+    border-radius:15px;
+    background:#FFF8F2;
+    border:2px solid #f0e0d3;
+}
+.send-btn {
+    width:100%;
+    margin-top:12px;
+    padding:13px;
+    border-radius:999px;
+    border:none;
+    background:linear-gradient(135deg,var(--button-grad-1),var(--button-grad-2));
+    color:white;
+    cursor:pointer;
+    box-shadow:0 8px 18px var(--frame-glow);
+}
+
+.message-card {
+    background:#fff;
+    padding:16px;
+    border-radius:14px;
+    margin-bottom:14px;
+    font-family:"Great Vibes",cursive;
+    font-size:30px;
+    color:var(--primary-accent);
+    position:relative;
+    box-shadow:0 7px 16px rgba(0,0,0,0.08);
+    animation:slideIn .55s ease-out;
+}
+
+@keyframes slideIn {
+    0%{transform:translateY(40px); opacity:0;}
+    70%{transform:translateY(-6px); opacity:1;}
+    100%{transform:translateY(0);}
+}
+
+.action-buttons {
+    position:absolute;
+    top:10px;
+    right:12px;
+    display:flex;
+    gap:4px;
+}
+.action-buttons span {
+    background:var(--button-grad-2);
+    padding:6px 8px;
+    border-radius:8px;
+    color:white;
+    cursor:pointer;
+    font-size:12px;
+}
+
+/* HEART BURST (Send Button Effect) */
+.burst-heart {
+    position:fixed;
+    font-size:24px;
+    color:#ff7b89;
+    pointer-events:none;
+    animation:burstUp var(--duration,1s) ease-out forwards;
+    z-index:9999;
+}
+@keyframes burstUp {
+    0%{transform:translateX(0) translateY(0) scale(.5); opacity:1;}
+    100%{transform:translateX(var(--driftX)) translateY(-120px) scale(1.2); opacity:0;}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- FLOATING BACKGROUND HEARTS -->
+<div class="floating-hearts">
+    <span>❤</span>
+    <span>❤</span>
+    <span>❤</span>
+    <span>❤</span>
+    <span>❤</span>
+    <span>❤</span>
+</div>
+
+<!-- HEADING -->
+<div class="heading-wrapper">
+    <h1 class="get-title">Get Together</h1>
+    <p class="get-subtitle">A collection of cherished moments</p>
+
+    <!-- HEART ROW -->
+    <div class="heart-row">
+        <span>❤</span><span>❤</span><span>❤</span><span>❤</span><span>❤</span>
+        <span>❤</span><span>❤</span><span>❤</span><span>❤</span><span>❤</span>
+    </div>
+</div>
+
+<!-- GRID -->
+<div class="grid">
+    <div class="item"><img src="https://i.ibb.co/hJs38Vd5/at1.webp"></div>
+    <div class="text-box">"The best memories are made at home, with them."</div>
+    <div class="text-box">"Collecting little moments that feel like sunshine."</div>
+    <div class="item"><img src="https://i.ibb.co/DP5h8235/at2.webp"></div>
+
+    <div class="item"><img src="https://i.ibb.co/ks31vgKd/at3.jpg"></div>
+    <div class="text-box">"Every moment with them is a memory worth keeping forever."</div>
+    <div class="text-box">"Sundays are for family and warm hugs."</div>
+    <div class="item"><img src="https://i.ibb.co/zhK5HRS3/at4.jpg"></div>
+</div>
+
+<!-- MESSAGE SECTION -->
+<div class="message-section">
+    <h2 style="text-align:center; color:var(--primary-accent);">Leave Birthday Messages</h2>
+
+    <textarea id="messageInput" placeholder="Write a message..."></textarea>
+
+    <button class="send-btn" onclick="sendMessage()">🎈 Send Message</button>
+
+    <div id="messageList"></div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    loadMessages();
+});
+
+/* SAVE */
+function saveMessages() {
+    const msgs = [];
+    document.querySelectorAll(".message-text").forEach(m => msgs.push(m.textContent));
+    localStorage.setItem("messages", JSON.stringify(msgs));
+}
+
+/* LOAD */
+function loadMessages() {
+    const saved = JSON.parse(localStorage.getItem("messages")) || [];
+    saved.forEach(msg => addMessage(msg, false));
+}
+
+/* SEND */
+function sendMessage() {
+    const input = document.getElementById("messageInput");
+    if (!input.value.trim()) return;
+
+    addMessage(input.value.trim(), true);
+    heartBurst();
+    saveMessages();
+    input.value = "";
+}
+
+/* ADD MESSAGE */
+function addMessage(text, animate=true) {
+    const list = document.getElementById("messageList");
+
+    const card = document.createElement("div");
+    card.className = "message-card";
+    if (!animate) card.style.animation = "none";
+
+    card.innerHTML = `
+        <span class="message-text">${text}</span>
+        <div class="action-buttons">
+            <span onclick="editMessage(this)">✏️</span>
+            <span onclick="deleteMessage(this)">🗑️</span>
+        </div>
+    `;
+
+    list.appendChild(card);
+    list.scrollTop = list.scrollHeight;
+}
+
+/* DELETE */
+function deleteMessage(btn) {
+    btn.closest(".message-card").remove();
+    saveMessages();
+}
+
+/* EDIT */
+function editMessage(btn) {
+    const span = btn.closest(".message-card").querySelector(".message-text");
+    const updated = prompt("Edit Message:", span.textContent);
+    if (updated && updated.trim()) {
+        span.textContent = updated.trim();
+        saveMessages();
+    }
+}
+
+/* HEART BURST */
+function heartBurst() {
+    const btn = document.querySelector(".send-btn");
+    const rect = btn.getBoundingClientRect();
+
+    for (let i = 0; i < 6; i++) {
+        const heart = document.createElement("div");
+        heart.className = "burst-heart";
+        heart.textContent = "❤";
+
+        heart.style.left = `${rect.left + rect.width/2}px`;
+        heart.style.top = `${rect.top}px`;
+
+        heart.style.setProperty("--driftX",(Math.random()-0.5)*140+"px");
+        heart.style.setProperty("--duration",(0.8+Math.random()*0.6)+"s");
+
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),1200);
+    }
+}
+</script>
+
+</body>
+</html>
